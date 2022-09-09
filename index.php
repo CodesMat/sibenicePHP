@@ -1,6 +1,5 @@
 <?php
-include_once 'conn.php';
-session_start();
+include_once "header.php";
 
 $pismenos = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 $vyhra = false;
@@ -37,24 +36,29 @@ function zacitHru(){
 // restart SESNY
 function restartovatHru(){
     session_destroy();
-    session_start();}
+    session_start();
+}
 function getCasty(){
-
     global $castiTela;
     return isset($_SESSION['castiH']) ? $_SESSION['castiH'] : $castiTela;
+    
 }
 
 // pridani casti hanhmana
 function pridatTelo(){
     $castiH = getCasty();
     array_shift($castiH);
+    //bere obrazek po obrazku
     $_SESSION['castiH'] = $castiH;
+  // print_r($castiH[0]);
+//bere obrazek po obrazku
 }
 
 // get na cast tela hangmana
 function getCurrentCast(){
     $castiH = getCasty();
     return $castiH[0];
+    print_r("ada".$castiH);
 }
 
 
@@ -73,6 +77,10 @@ function getSlovo(){
 // get odpoved
 function getOdpoved(){
     return isset($_SESSION["responses"]) ? $_SESSION["responses"] : [];
+   // return either(isset($_SESSION
+}
+function napoveda(){
+    /**/
 }
 
 function addOdpoved($pismeno){
@@ -81,7 +89,6 @@ function addOdpoved($pismeno){
     $_SESSION["responses"] = $responses;
 }
 
-// check if pressed letter is correct
 function jePismenoSpravne($pismeno){
     $slovo = getSlovo();
     $max = strlen($slovo) - 1;
@@ -119,7 +126,7 @@ function kompletniTeloCheck(){
 
 
 function konecHry(){
-    return isset($_SESSION["gamecomplete"]) ? $_SESSION["gamecomplete"] :false;
+ return isset($_SESSION["gamecomplete"]) ? $_SESSION["gamecomplete"] :false;
 }
 
 
@@ -170,28 +177,9 @@ if(isset($_GET['pismeno'])){
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title></title>
-</head>
-    <body>
-
-        <div class="container" >
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
  
   
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="pridavaniSlov.php">přidat slovo</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Hrát</a>
-      </li>
-</nav>
+
             <div class="row">
                 <div class="col-md-12">
             
@@ -251,5 +239,6 @@ if(isset($_GET['pismeno'])){
         </div>
         </div>
         </div>
-</body>
-</html>
+<?php 
+include_once "footer.php";
+ ?>
